@@ -98,5 +98,6 @@ begin
                end;
     end;
   end;
+  endtoken;
 end.
 
