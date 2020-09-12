@@ -1,12 +1,13 @@
-var s:ansistring; //s ±íÊ¾µ±Ç°µÄ×Ö·û´®
-    c:char;       //c ÊÇµ±Ç°¶ÁÈëµÄ×Ö·û
-    t:longint;    //t ±íÊ¾µ±Ç° token
-    // t=0 ±íÊ¾ Ä¿Ç°»¹Ã»ÓĞÊ²Ã´¶«Î÷qwq
-    // t=1 ±íÊ¾ [NAME] »ò [RESERVED]
-    // t=2 ±íÊ¾ [NUMBER]
-    // t=3 ±íÊ¾ [COMMENT]
-    // t=4 ±íÊ¾ [STRING] ²¢ÇÒÒÔµ¥ÒıºÅ¿ªÍ·
-    // t=5 ±íÊ¾ [STRING] ²¢ÇÒÒÔË«ÒıºÅ¿ªÍ·
+var s:ansistring; //s è¡¨ç¤ºå½“å‰çš„å­—ç¬¦ä¸²
+    c:char;       //c æ˜¯å½“å‰è¯»å…¥çš„å­—ç¬¦
+    t:longint;    //t è¡¨ç¤ºå½“å‰ token
+    // t=0 è¡¨ç¤º ç›®å‰è¿˜æ²¡æœ‰ä»€ä¹ˆä¸œè¥¿qwq
+    // t=1 è¡¨ç¤º [NAME] æˆ– [RESERVED]
+    // t=2 è¡¨ç¤º [NUMBER] ï¼ˆåè¿›åˆ¶ï¼‰
+    // t=3 è¡¨ç¤º [NUMBER] ï¼ˆåå…­è¿›åˆ¶ï¼‰
+    // t=4 è¡¨ç¤º [COMMENT]
+    // t=5 è¡¨ç¤º [STRING] å¹¶ä¸”ä»¥å•å¼•å·å¼€å¤´
+    // t=6 è¡¨ç¤º [STRING] å¹¶ä¸”ä»¥åŒå¼•å·å¼€å¤´
 function is_reserved(s:ansistring):boolean;
 begin
   s:=lowercase(s);
@@ -23,10 +24,10 @@ begin
         writeln('[RESERVED] ',s)
       else
         writeln('[NAME] ', s);
-    2:writeln('[NUMBER] ',s);
-    3:writeln('[COMMENT] ',s);
-    4:writeln('[STRING] ',s);
+    2,3:writeln('[NUMBER] ',s);
+    4:writeln('[COMMENT] ',s);
     5:writeln('[STRING] ',s);
+    6:writeln('[STRING] ',s);
   end;
 end;
 begin
@@ -35,44 +36,41 @@ begin
     read(c);
     case c of
       '''':case t of
-             0,1,2,3:begin
-                       stoptoken;
-                       s:='''';
-                       t:=4;
-                     end;
-             4:begin
+             0,1,2,3,4:begin
+                         stoptoken;
+                         s:='''';
+                         t:=5;
+                       end;
+             5:begin
                  writeln('[STRING] ',s,'''');
                  s:='';
                  t:=0;
                end;
-             5:s:=s+c;
+             6:s:=s+c;
            end;
       '"':case t of
-            0,1,2,3:begin
-                      stoptoken;
-                      s:='"';
-                      t:=5;
-                    end;
-            4:s:=s+c;
-            5:begin
+            0,1,2,3,4:begin
+                        stoptoken;
+                        s:='"';
+                        t:=6;
+                      end;
+            5:s:=s+c;
+            6:begin
                 writeln('[STRING] ',s,'"');
-                s:='';
-                t:=0;
+                s:='';t:=0;
               end;
           end;
       ' ':case t of
-            0,1,2,3:begin
+            1,2,3,4:begin
                       stoptoken;
-                      s:='';
-                      t:=0;
+                      s:='';t:=0;
                     end;
-            4,5:s:=s+c;
+            5,6:s:=s+c;
           end;
       #13:begin
             stoptoken;
+            s:='';t:=0;
             writeln('[EOL]');
-            s:='';
-            t:=0;
           end;
     end;
   end;
