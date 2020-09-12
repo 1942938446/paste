@@ -37,10 +37,10 @@ begin
     if c='''' then
       case t of
         0,1,2,3,4:begin
-                  stoptoken;
-                  s:='''';
-                  t:=4;
-                end;
+                    stoptoken;
+                    s:='''';
+                    t:=4;
+                  end;
         5:begin
             writeln('[STRING] ',s,'''');
             s:='';
@@ -51,10 +51,10 @@ begin
     if c='"' then
       case t of
         0,1,2,3,4:begin
-                  stoptoken;
-                  s:='"';
-                  t:=5;
-                end;
+                    stoptoken;
+                    s:='"';
+                    t:=5;
+                  end;
         5:s:=s+c;
         6:begin
             writeln('[STRING] ',s,'"');
