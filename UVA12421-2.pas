@@ -3,10 +3,11 @@ var s:ansistring; //s 表示当前的字符串
     t:longint;    //t 表示当前 token
     // t=0 表示 目前还没有什么东西qwq
     // t=1 表示 [NAME] 或 [RESERVED]
-    // t=2 表示 [NUMBER]
-    // t=3 表示 [COMMENT]
-    // t=4 表示 [STRING] 并且以单引号开头
-    // t=5 表示 [STRING] 并且以双引号开头
+    // t=2 表示 [NUMBER] （十进制）
+    // t=3 表示 [NUMBER] （十六进制）
+    // t=4 表示 [COMMENT]
+    // t=5 表示 [STRING] 并且以单引号开头
+    // t=6 表示 [STRING] 并且以双引号开头
 function is_reserved(s:ansistring):boolean;
 begin
   s:=lowercase(s);
@@ -23,10 +24,10 @@ begin
         writeln('[RESERVED] ',s)
       else
         writeln('[NAME] ', s);
-    2:writeln('[NUMBER] ',s);
-    3:writeln('[COMMENT] ',s);
-    4:writeln('[STRING] ',s);
+    2,3:writeln('[NUMBER] ',s);
+    4:writeln('[COMMENT] ',s);
     5:writeln('[STRING] ',s);
+    6:writeln('[STRING] ',s);
   end;
 end;
 begin
@@ -35,38 +36,38 @@ begin
     read(c);
     case c of
       '''':case t of
-             0,1,2,3:begin
-                       stoptoken;
-                       s:='''';
-                       t:=4;
-                     end;
-             4:begin
+             0,1,2,3,4:begin
+                         stoptoken;
+                         s:='''';
+                         t:=5;
+                       end;
+             5:begin
                  writeln('[STRING] ',s,'''');
                  s:='';
                  t:=0;
                end;
-             5:s:=s+c;
+             6:s:=s+c;
            end;
       '"':case t of
-            0,1,2,3:begin
-                      stoptoken;
-                      s:='"';
-                      t:=5;
-                    end;
-            4:s:=s+c;
-            5:begin
+            0,1,2,3,4:begin
+                        stoptoken;
+                        s:='"';
+                        t:=6;
+                      end;
+            5:s:=s+c;
+            6:begin
                 writeln('[STRING] ',s,'"');
                 s:='';
                 t:=0;
               end;
           end;
       ' ':case t of
-            0,1,2,3:begin
+            1,2,3,4:begin
                       stoptoken;
                       s:='';
                       t:=0;
                     end;
-            4,5:s:=s+c;
+            5,6:s:=s+c;
           end;
     end;
   end;
