@@ -57,17 +57,20 @@ begin
             5:s:=s+c;
             6:begin
                 writeln('[STRING] ',s,'"');
-                s:='';
-                t:=0;
+                s:='';t:=0;
               end;
           end;
       ' ':case t of
             1,2,3,4:begin
                       stoptoken;
-                      s:='';
-                      t:=0;
+                      s:='';t:=0;
                     end;
             5,6:s:=s+c;
+          end;
+      #13:begin
+            stoptoken;
+            s:='';t:=0;
+            writeln('[EOL]');
           end;
     end;
   end;
