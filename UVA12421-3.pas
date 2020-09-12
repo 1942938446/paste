@@ -67,7 +67,7 @@ begin
                     end;
             5,6:s:=s+c;
           end;
-      #13:begin
+      #10:begin
             stoptoken;
             s:='';t:=0;
             writeln('[EOL]');
