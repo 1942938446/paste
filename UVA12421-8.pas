@@ -5,7 +5,7 @@ var s:ansistring; //s 表示当前的字符串
     // t=1 表示 [NAME] 或 [RESERVED]
     // t=2 表示 [NUMBER] （十进制）
     // t=3 表示 [NUMBER] （十六进制）
-    // t=4 表示 [COMMENT]
+    // t=4 表示 [SYMBOL]
     // t=5 表示 [STRING] 并且以单引号开头
     // t=6 表示 [STRING] 并且以双引号开头
 function is_reserved(s:ansistring):boolean;
@@ -25,7 +25,7 @@ begin
       else
         writeln('[NAME] ', s);
     2,3:writeln('[NUMBER] ',s);
-    4:writeln('[COMMENT] ',s);
+    4:writeln('[SYMBOL] ',s);
     5:writeln('[STRING] ',s);
     6:writeln('[STRING] ',s);
   end;
